@@ -4,7 +4,7 @@
 #include "log.h"
 
 // 异步需要设置阻塞队列的长度，同步的不用
-bool Log::init(const char* filename, int close_log, int log_buf_size = 8192, int max_lines = 5000000, int max_queue_size = 0)
+bool Log::init(const char* filename, int close_log, int log_buf_size, int max_lines, int max_queue_size)
 {
     // 如果设置了队列长度，则设置为异步
     if(max_queue_size >= 1)
@@ -47,10 +47,10 @@ bool Log::init(const char* filename, int close_log, int log_buf_size = 8192, int
         strncpy(dir_name, filename, p - filename + 1);
         // 格式化得到最终的文件名
         snprintf(log_full_name, 255, "%s%d_%02d_%02d_%s",
-         dir_name, my_tm.tm_year + 1900, my_tm.tm_mon + 1, my_tm.tm_mday, filename);
+         dir_name, my_tm.tm_year + 1900, my_tm.tm_mon + 1, my_tm.tm_mday, log_file_ame);
+        
     }
     m_day = my_tm.tm_mday;
-
     m_fp = fopen(log_full_name, "a");
     if(m_fp == NULL)
     {

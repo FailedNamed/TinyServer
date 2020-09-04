@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <sys/time.h>
-#include "lock/locker.h"
+#include "../lock/locker.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ class block_queue
 public:
     block_queue(int max_size = 100)
     {
-        if(max_size <= 0 || max_size > MAX_SIZE)
+        if(max_size <= 0 || max_size >= MAX_SIZE)
         {
             exit(-1);
         }
@@ -197,7 +197,9 @@ private:
     int m_size;      // 已使用容量
     int m_front;     // 队头下标
     int m_back;      // 队尾下标
-    static int MAX_SIZE = 100000000;    // 允许的最大容量，不允许超过
+    static int MAX_SIZE;    // 允许的最大容量，不允许超过
 };
+template<typename T>
+int block_queue<T>::MAX_SIZE = 100000000;
 
 #endif
