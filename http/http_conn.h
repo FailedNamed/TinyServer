@@ -69,8 +69,7 @@ public:
     void initmysql_result();
     // CGI使用线程池初始化数据库表
     void initmysql_result(connection_pool* connPool);
-    int timer_flag;
-    int improv;
+    
 
 private:
     void init();
@@ -112,7 +111,13 @@ public:
     static int m_user_count;
     // 数据库连接
     MYSQL* mysql;
-    int m_state;    // 读为0，写为1
+    // 下面三个都只有reacotr模式用到
+    // 读为0，写为1 (是准备给reacotr模式用的，区分任务)
+    int m_state;    
+    // 也是给reactor模式用的， 1代表当前可以处理任务， 0代表任务正在处理
+    int improv;
+    // 是否处理定时器, 1 代表连接对应定时器到期，  0代表未到期
+    int timer_flag;
 
 private:
     // 客户端连接socket

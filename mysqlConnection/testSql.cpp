@@ -29,7 +29,7 @@ void select(connection_pool* m_sql_pool)
     }
     cout << endl;
     
-    for(int i = 1; i < row; ++i)
+    for(int i = 1; i <= row; ++i)
     {
         result_row = mysql_fetch_row(result);
         for(int j = 0; j < col; ++j)
